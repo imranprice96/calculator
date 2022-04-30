@@ -33,7 +33,14 @@ body{
     height: 100px;
     margin: 4px;
     border-radius: 10px;
+
+    justify-content: end;
+    align-items: center;
+    font-size: 60px;
+    padding: 10px;
+    overflow: hidden;
 }
+
 
 .clear-container{
     display: grid;
