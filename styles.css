@@ -39,6 +39,7 @@ body{
     font-size: 60px;
     padding: 10px;
     overflow: hidden;
+    white-space: nowrap;
 }
 
 

@@ -104,7 +104,7 @@ function chooseOperation(e){
 function updateDisplay(){
     let screenContent = getCalculationData();
     screen.textContent = screenContent;
-    console.log(`screen content: ${screenContent}`);
+    //console.log(`screen content: ${screenContent}`);
 };
 
 
@@ -184,32 +184,25 @@ function operate(operator, a, b){
     let result;
     let first = parseFloat(a);
     let second = parseFloat(b);
-    console.log(operator);
     switch(operator){
         case '+':
             result = add(first,second);
-            console.log('add');
             break;
         case '-':
             result = subtract(first,second);
-            console.log('sub');
             break;
         case '*':
             result = multiply(first,second);
-            console.log('times');
             break;
         case '/':
             if(second == 0) break;
             result = divide(first,second);
-            console.log('divide');
             break;
     };
-    console.log(result);
     return result;
 }
 
 function compute(){
-    //switch
     let result;
     if(checkData() == 'second'){
         result = operate(calculation.operator, calculation.firstNumber, calculation.secondNumber);
@@ -218,3 +211,4 @@ function compute(){
         updateDisplay();
     };
 };
+
