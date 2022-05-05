@@ -12,10 +12,6 @@ let calculation = {
     operator: undefined
 };
 
-let lastPressed = {
-    lastInput : undefined,
-    lastType : undefined
-}
 
 const screen = document.getElementById('screen');
 
@@ -40,7 +36,6 @@ operationButtons.forEach(btn => btn.addEventListener('click', (e) => {
 backspaceButton.addEventListener('click', (e) => {
     if(isButton(e)) {
         backspace();
-        sliceScreenText();
     }
 });
 
@@ -52,7 +47,6 @@ function clearScreen(){
     calculation.currentOperation = undefined;
     calculation.firstNumber = '';
     calculation.secondNumber = '';
-    calculation.lastPressed = undefined;
 };
 
 function appendNumber(e){
@@ -63,13 +57,11 @@ function appendNumber(e){
                 return;
             }else{
                 calculation.firstNumber += input;
-                updateDisplay(input);
-                 setLastPressed(input, 'first');
+                updateDisplay();
             };
         }else{
             calculation.firstNumber += input;
-            updateDisplay(input);
-            setLastPressed(input, 'first');
+            updateDisplay();
         };
     };
 
@@ -80,13 +72,11 @@ function appendNumber(e){
                 return;
             }else{
                 calculation.secondNumber += input;
-                updateDisplay(input);
-                 setLastPressed(input, 'second');
+                updateDisplay();
             };
         }else{
             calculation.secondNumber += input;
-            updateDisplay(input);
-            setLastPressed(input, 'second');
+            updateDisplay();
         };
     };
 };
@@ -95,8 +85,7 @@ function chooseOperation(e){
     if(!calculation.operator && calculation.firstNumber.length > 0){
         let op = e.target.value;
         calculation.operator = op;
-        updateDisplay(op);
-        setLastPressed(op, 'op');
+        updateDisplay();
     }
 };
 
@@ -104,14 +93,10 @@ function compute(){
     //switch
 };
 
-function updateDisplay(input){
-    screen.textContent += input;
-};
-
-function setLastPressed(input, type){
-    lastPressed.lastInput = input;
-    lastPressed.lastType = type;
-    console.log(`last: ${lastPressed.lastInput} ${lastPressed.lastType}`);
+function updateDisplay(){
+    let screenContent = getCalculationData();
+    screen.textContent = screenContent;
+    console.log(screenContent);
 };
 
 function hasDecimalPoint(number){
@@ -123,22 +108,62 @@ function decimalPointCheck(str){
 };
 
 function backspace(){
-    switch(lastPressed.lastType){
+    switch(checkData()){
         case 'first':
             calculation.firstNumber = calculation.firstNumber.slice(0,-1);
-            sliceScreenText();
+            updateDisplay();
             break;
         case 'second':
             calculation.secondNumber = calculation.secondNumber.slice(0,-1);
-            sliceScreenText();
+            updateDisplay();
             break;
         case 'op':
             calculation.operator = undefined;
-            sliceScreenText();
+            updateDisplay();
             break;
-    };
+        case 'none':
+            break;
+    };  
 }
 
-function sliceScreenText(){
-    screen.textContent.slice(0,-1);
+function checkData(){
+    if(calculation.firstNumber.length > 0 && calculation.operator && calculation.secondNumber.length > 0){
+        return 'second';
+    }
+    else if(calculation.firstNumber.length > 0 && calculation.operator){
+        return 'op';
+    }
+    else if(calculation.firstNumber.length > 0){
+        return 'first';
+    }
+    return 'none';
+}
+
+function getCalculationData(){
+    let screenData = '';
+    /*if(calculation.firstNumber.length > 0){
+        screenData += calculation.firstNumber
+    }
+    if(calculation.firstNumber.length > 0 && calculation.operator){
+        screenData += calculation.operator
+    }
+    if(calculation.firstNumber.length > 0 && calculation.operator && calculation.secondNumber.length > 0){
+        screenData += calculation.secondNumber
+    }
+    return screenData;*/
+
+    switch(checkData()){
+        case 'first':
+            screenData += calculation.firstNumber;
+            break;
+        case 'op':
+            screenData += calculation.firstNumber + calculation.operator;
+            break;
+        case 'second':
+            screenData += calculation.firstNumber + calculation.operator + calculation.secondNumber;
+            break;
+        case 'none':
+            break;
+    };
+    return screenData;
 }
