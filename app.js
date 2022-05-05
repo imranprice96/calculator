@@ -1,20 +1,17 @@
 
-//TODO
-//Add way to keep track of the current selection
-//Maybe store everything in one string the use split or slice
-//or append everything into one string then slice
 
-//Create switch case for computation
-
+//
 let calculation = {
     firstNumber: '',
     secondNumber: '',
     operator: undefined
 };
 
-
 const screen = document.getElementById('screen');
 
+
+// ------------------------------------------------------------------------ //
+// SCREEN BUTTONS
 const numberButtons = document.querySelectorAll('[data-number]')
 const operationButtons = document.querySelectorAll('[data-operation]');
 const equalsButton = document.querySelector('[data-equals]');
@@ -39,14 +36,22 @@ backspaceButton.addEventListener('click', (e) => {
     }
 });
 
+clearButton.addEventListener('click', (e) => {
+    if(isButton(e)) {
+        clearScreen();
+    }
+});
+
 function isButton(e){
     return e.target.nodeName === 'BUTTON';
 }
-
+// ------------------------------------------------------------------------ //
+//SCREEN UPDATING
 function clearScreen(){
     calculation.currentOperation = undefined;
     calculation.firstNumber = '';
     calculation.secondNumber = '';
+    updateDisplay();
 };
 
 function appendNumber(e){
@@ -64,7 +69,6 @@ function appendNumber(e){
             updateDisplay();
         };
     };
-
 
     if(calculation.operator){
         if(decimalPointCheck(input)){
@@ -89,23 +93,15 @@ function chooseOperation(e){
     }
 };
 
-function compute(){
-    //switch
-};
+
 
 function updateDisplay(){
     let screenContent = getCalculationData();
     screen.textContent = screenContent;
-    console.log(screenContent);
+    console.log(`screen content: ${screenContent}`);
 };
 
-function hasDecimalPoint(number){
-    return number.includes('.');
-};
 
-function decimalPointCheck(str){
-    return str == '.';
-};
 
 function backspace(){
     switch(checkData()){
@@ -125,7 +121,8 @@ function backspace(){
             break;
     };  
 }
-
+// ------------------------------------------------------------------------ //
+// CHECK FUNCTIONS
 function checkData(){
     if(calculation.firstNumber.length > 0 && calculation.operator && calculation.secondNumber.length > 0){
         return 'second';
@@ -141,17 +138,6 @@ function checkData(){
 
 function getCalculationData(){
     let screenData = '';
-    /*if(calculation.firstNumber.length > 0){
-        screenData += calculation.firstNumber
-    }
-    if(calculation.firstNumber.length > 0 && calculation.operator){
-        screenData += calculation.operator
-    }
-    if(calculation.firstNumber.length > 0 && calculation.operator && calculation.secondNumber.length > 0){
-        screenData += calculation.secondNumber
-    }
-    return screenData;*/
-
     switch(checkData()){
         case 'first':
             screenData += calculation.firstNumber;
@@ -167,3 +153,20 @@ function getCalculationData(){
     };
     return screenData;
 }
+
+function hasDecimalPoint(number){
+    return number.includes('.');
+};
+
+function decimalPointCheck(str){
+    return str == '.';
+};
+
+
+
+// ------------------------------------------------------------------------ //
+//COMPUTATION
+
+function compute(){
+    //switch
+};
