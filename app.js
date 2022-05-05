@@ -195,7 +195,10 @@ function operate(operator, a, b){
             result = multiply(first,second);
             break;
         case '/':
-            if(second == 0) break;
+            if(second == 0){
+                alert('Cannot divide by 0!');
+                break;
+            };
             result = divide(first,second);
             break;
     };

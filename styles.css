@@ -10,7 +10,7 @@ body{
     display:flex;
     flex-direction: column;
     width: 400px;
-    height: 600px;
+    height: auto;
     background-color: #333333;
     padding: 20px;
     border-radius: 10px;
@@ -30,7 +30,8 @@ body{
 .result-panel{
     display: flex;
     background-color: #CCCCCC;
-    height: 100px;
+    height: auto;
+    min-height: 80px;
     margin: 4px;
     border-radius: 10px;
 
