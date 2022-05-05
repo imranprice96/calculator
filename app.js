@@ -42,6 +42,12 @@ clearButton.addEventListener('click', (e) => {
     }
 });
 
+clearButton.addEventListener('click', (e) => {
+    if(isButton(e)) {
+        compute();
+    }
+});
+
 function isButton(e){
     return e.target.nodeName === 'BUTTON';
 }
@@ -166,7 +172,45 @@ function decimalPointCheck(str){
 
 // ------------------------------------------------------------------------ //
 //COMPUTATION
+function add(a,b){return a+b};
+
+function subtract(a,b){return a-b}
+
+function multiply(a,b){return a*b}
+
+function divide(a,b){return a/b}
+
+function operate(operator, a, b){
+    let result;
+    let first = parseFloat(a);
+    let second = parseFloat(b);
+    console.log(operator);
+    switch(operator){
+        case '+':
+            result = add(first,second);
+            console.log('add');
+            break;
+        case '-':
+            result = subtract(first,second);
+            console.log('sub');
+            break;
+        case '*':
+            result = multiply(first,second);
+            console.log('times');
+            break;
+        case '/':
+            if(second == 0) break;
+            result = divide(first,second);
+            console.log('divide');
+            break;
+    };
+    console.log(result);
+    return result;
+}
 
 function compute(){
     //switch
+    if(checkData() == 'second'){
+
+    };
 };
