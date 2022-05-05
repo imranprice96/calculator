@@ -1,12 +1,11 @@
-
-
-//
+//STORES COMPUTATION
 let calculation = {
     firstNumber: '',
     secondNumber: '',
     operator: undefined
 };
 
+//OUTPUT
 const screen = document.getElementById('screen');
 
 
@@ -60,6 +59,7 @@ function clearScreen(){
     updateDisplay();
 };
 
+//Add number to screen
 function appendNumber(e){
     let input = e.target.value.toString();
     if(!calculation.operator){
@@ -75,7 +75,6 @@ function appendNumber(e){
             updateDisplay();
         };
     };
-
     if(calculation.operator){
         if(decimalPointCheck(input)){
             if(hasDecimalPoint(calculation.secondNumber)){
@@ -91,12 +90,17 @@ function appendNumber(e){
     };
 };
 
+//Add operation to screen
 function chooseOperation(e){
-    if(!calculation.operator && calculation.firstNumber.length > 0){
+    if(checkData() == 'first'){
         let op = e.target.value;
         calculation.operator = op;
         updateDisplay();
-    }
+    };
+    if(checkData() == 'second'){
+        compute();
+        chooseOperation(e);
+    };
 };
 
 
@@ -106,7 +110,6 @@ function updateDisplay(){
     screen.textContent = screenContent;
     //console.log(`screen content: ${screenContent}`);
 };
-
 
 
 function backspace(){
@@ -129,6 +132,9 @@ function backspace(){
 }
 // ------------------------------------------------------------------------ //
 // CHECK FUNCTIONS
+
+//Checks to see which part of the equation are added
+// returns ('a' 'b' 'c') in ('1' '+' '2') for example
 function checkData(){
     if(calculation.firstNumber.length > 0 && calculation.operator && calculation.secondNumber.length > 0){
         return 'second';
@@ -142,6 +148,7 @@ function checkData(){
     return 'none';
 }
 
+//Returns a string representing the current equation
 function getCalculationData(){
     let screenData = '';
     switch(checkData()){
@@ -202,9 +209,11 @@ function operate(operator, a, b){
             result = divide(first,second);
             break;
     };
-    return result;
+    //return result;
+    return Math.round((result + Number.EPSILON) * 100000) / 100000;
 }
 
+//Runs calculation and updates the display
 function compute(){
     let result;
     if(checkData() == 'second'){

@@ -13,3 +13,5 @@ which would be another challenge.
 The result panel is a set size.
 Currently when a number is too large, the div or text does not change when the
 output is too large for the container.
+
+Output is currently rounded to five decimal places.
