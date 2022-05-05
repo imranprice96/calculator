@@ -42,7 +42,7 @@ clearButton.addEventListener('click', (e) => {
     }
 });
 
-clearButton.addEventListener('click', (e) => {
+equalsButton.addEventListener('click', (e) => {
     if(isButton(e)) {
         compute();
     }
@@ -54,7 +54,7 @@ function isButton(e){
 // ------------------------------------------------------------------------ //
 //SCREEN UPDATING
 function clearScreen(){
-    calculation.currentOperation = undefined;
+    calculation.operator = undefined;
     calculation.firstNumber = '';
     calculation.secondNumber = '';
     updateDisplay();
@@ -210,7 +210,11 @@ function operate(operator, a, b){
 
 function compute(){
     //switch
+    let result;
     if(checkData() == 'second'){
-
+        result = operate(calculation.operator, calculation.firstNumber, calculation.secondNumber);
+        clearScreen();
+        calculation.firstNumber = result.toString();
+        updateDisplay();
     };
 };
